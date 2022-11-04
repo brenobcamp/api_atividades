@@ -25,13 +25,18 @@ class Pessoas(Base):
         db_session.delete(self)
         db_session.commit()
 
-class Ativadades(Base):
+class Atividades(Base):
     __tablename__ = 'atividades'
     id = Column(Integer, primary_key=True)
     nome = Column(String(80))
     pessoa_id = Column(Integer, ForeignKey('pessoas.id'))
     pessoa = relationship("Pessoas")
 
+    
+    def save(self):
+        db_session.add(self)
+        db_session.commit()
+        
 def init_db():
     Base.metadata.create_all(bind=engine)
 
